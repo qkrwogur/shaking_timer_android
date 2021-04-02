@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/stopWatch"
+        android:text="스탑와치"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/alarm"
+
+        android:background="@drawable/button"
+        />
+
+    <Button
+        android:id="@+id/alarm"
+        android:text="알람"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/stopWatch"
+        app:layout_constraintRight_toLeftOf="@+id/timer"
+
+        android:background="@drawable/button"
+        />
+
+    <Button
+        android:id="@+id/timer"
+        android:text="타이머"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/alarm"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/motion"
+
+        android:background="@drawable/button"
+        />
+
+    <Button
+        android:id="@+id/motion"
+        android:text="모션 설정"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/timer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:background="@drawable/button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
