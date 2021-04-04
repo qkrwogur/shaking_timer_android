@@ -12,8 +12,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/alarm"
+        android:textColor="#FFFFFF"
 
-        android:background="@drawable/button"
+        android:background="@drawable/button2"
         />
 
     <Button
@@ -24,6 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/stopWatch"
         app:layout_constraintRight_toLeftOf="@+id/timer"
+        android:textColor="#FFFFFF"
 
         android:background="@drawable/button"
         />
@@ -36,6 +38,7 @@
         app:layout_constraintLeft_toRightOf="@+id/alarm"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/motion"
+        android:textColor="#FFFFFF"
 
         android:background="@drawable/button"
         />
@@ -48,6 +51,7 @@
         app:layout_constraintLeft_toRightOf="@+id/timer"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:textColor="#FFFFFF"
 
         android:background="@drawable/button"/>
 
