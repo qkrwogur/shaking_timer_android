@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <Button
         android:id="@+id/stopWatch"
@@ -12,9 +13,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/alarm"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="2dp"
 
-        android:background="@drawable/button2"
+        android:background="@drawable/button"
+
         />
 
     <Button
@@ -25,9 +27,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/stopWatch"
         app:layout_constraintRight_toLeftOf="@+id/timer"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="2dp"
 
         android:background="@drawable/button"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         />
 
     <Button
@@ -38,9 +42,10 @@
         app:layout_constraintLeft_toRightOf="@+id/alarm"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/motion"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="2dp"
 
         android:background="@drawable/button"
+        android:layout_marginRight="10dp"
         />
 
     <Button
@@ -51,8 +56,8 @@
         app:layout_constraintLeft_toRightOf="@+id/timer"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:textColor="#FFFFFF"
 
+        android:layout_marginTop="2dp"
         android:background="@drawable/button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

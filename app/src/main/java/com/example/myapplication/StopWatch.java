@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class StopWatch extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Alarm.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -34,6 +36,7 @@ public class StopWatch extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Timer.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -43,8 +46,12 @@ public class StopWatch extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Motion.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
+
+        stopWatch.setBackgroundColor(Color.parseColor("#5AA3C3"));
+        stopWatch.setTextColor(Color.parseColor("#FFFFFF"));
     }
 }
