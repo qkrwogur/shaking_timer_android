@@ -129,13 +129,18 @@
         android:id="@+id/switchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
         app:layout_constraintRight_toRightOf="@+id/second"
         app:layout_constraintTop_toBottomOf="@id/motionSwitch"
         app:layout_constraintLeft_toLeftOf="@+id/second"
         android:text="모션 사용"
-
-
        />
+
+    <Button
+        android:id="@+id/timerStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="시작"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
