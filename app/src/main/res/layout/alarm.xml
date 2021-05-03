@@ -15,15 +15,26 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
-    <TextView
-        android:id="@+id/alarmText"
+
+    <ListView
+        android:id="@+id/printList"
+        android:descendantFocusability="blocksDescendants"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top"
+        tools:listitem="@layout/alarm_list"/>
+    <ImageView
+        android:id="@+id/plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/plus"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="alarm"
-        android:textSize="30dp"/>
+        android:layout_marginRight="100dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

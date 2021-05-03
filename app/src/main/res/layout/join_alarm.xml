@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".JoinAlarm"
+    >
+
+    <Button
+        android:id="@+id/cancel_join"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/save_join"
+
+        android:text="취소"
+
+        android:background="@drawable/button"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        />
+    <Button
+        android:id="@+id/save_join"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/cancel_join"
+
+        android:text="저장"
+
+        android:background="@drawable/button"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="시간         "
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/minuteText"
+        app:layout_constraintTop_toBottomOf="@+id/cancel_join"
+        android:layout_margin="10dp"
+
+        />
+    <NumberPicker
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeText"
+        app:layout_constraintRight_toLeftOf="@+id/minute"/>
+
+
+    <TextView
+        android:id="@+id/minuteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toTopOf="@+id/minute"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cancel_join"
+
+        android:layout_margin="10dp"
+
+        android:text="분"
+        />
+    <NumberPicker
+        android:id="@+id/minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/minuteText"
+
+        app:layout_constraintRight_toLeftOf="@+id/second"
+        app:layout_constraintLeft_toRightOf="@+id/time"
+
+        />
+
+    <TextView
+        android:id="@+id/secondText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toTopOf="@+id/second"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/minuteText"
+        app:layout_constraintTop_toBottomOf="@+id/save_join"
+        android:text="         초"
+
+        android:layout_margin="10dp"
+        />
+    <NumberPicker
+        android:id="@+id/second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toRightOf="@+id/minute"
+        app:layout_constraintTop_toBottomOf="@+id/secondText"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/minute"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="------------------------------------------------------------------------------------------------"
+        />
+
+    <TextView
+        android:id="@+id/nameAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nameAlarmEdt"
+
+        android:text="알람 이름 설정"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        />
+
+    <EditText
+        android:id="@+id/nameAlarmEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/nameAlarm"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+
+        android:layout_margin="10dp"
+        />
+    <TextView
+        android:id="@+id/holiday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/nameAlarmEdt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/vibration"
+
+        android:text="휴일"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        />
+
+    <Switch
+        android:id="@+id/holidaySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:thumb="@drawable/switch_thumb"
+        android:track="@drawable/switch_track_selector"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameAlarmEdt"
+        app:layout_constraintBottom_toTopOf="@+id/vibrationSwitch"
+
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/vibration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/holiday"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/motion"
+
+        android:text="진동"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        />
+
+    <Switch
+        android:id="@+id/vibrationSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:thumb="@drawable/switch_thumb"
+        android:track="@drawable/switch_track_selector"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/holidaySwitch"
+        app:layout_constraintBottom_toTopOf="@+id/motionSwitch"
+
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/motion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/vibration"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:text="모션 사용"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        />
+
+    <Switch
+        android:id="@+id/motionSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:thumb="@drawable/switch_thumb"
+        android:track="@drawable/switch_track_selector"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vibrationSwitch"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_margin="10dp"/>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
