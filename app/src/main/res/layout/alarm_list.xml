@@ -8,13 +8,14 @@
         android:id="@+id/list_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_weight="10"
         android:layout_margin="15dp"
         android:textSize="30dp" />
 
 
     <Switch
         android:id="@+id/list_switch"
+        android:focusable="false"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:layout_margin="20dp"

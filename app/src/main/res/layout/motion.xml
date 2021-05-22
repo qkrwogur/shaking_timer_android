@@ -29,6 +29,7 @@
         android:layout_margin="20dp"
         />
     <TextView
+        android:id="@+id/line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -39,6 +40,67 @@
         android:layout_margin="20dp"
         />
 
+    <ImageView
+        android:id="@+id/turn"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/turn"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        android:layout_margin="20dp"
+        />
 
 
+
+    <ImageView
+        android:id="@+id/shake"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/shake"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/turn"
+        android:layout_margin="20dp"
+
+        />
+    
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/slope"
+        app:layout_constraintTop_toBottomOf="@+id/shake"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="20dp"
+        />
+    <RadioGroup
+        android:id="@+id/motionRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/shake">
+        <RadioButton
+            android:id="@+id/slopeRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            />
+        <RadioButton
+            android:id="@+id/shakeRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            />
+
+        <RadioButton
+            android:id="@+id/turnRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            />
+
+
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
