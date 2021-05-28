@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,8 +25,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Alarm extends AppCompatActivity {
 
+    DBHelper dbHelper;
+    SQLiteDatabase db;
+
+
+    static final String DATABASE_NAME = "time.db";
+    static final int DATABASE_VERSION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,28 +93,26 @@ public class Alarm extends AppCompatActivity {
         alarm.setBackgroundColor(Color.parseColor("#5AA3C3"));
         alarm.setTextColor(Color.parseColor("#FFFFFF"));
 
-        final ArrayList alarmList = new ArrayList();
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
-        alarmList.add(new ListAlarm("10:00",true));
-        alarmList.add(new ListAlarm("10:00",false));
+        /*---------------------------------------------------------------------------------*/
+        dbHelper = new DBHelper(this,DATABASE_NAME,null,DATABASE_VERSION);
+        db = dbHelper.getWritableDatabase();
+        dbHelper.onUpgrade(db,0,0);
 
+        Cursor cursor = db.rawQuery("SELECT id,name,use FROM timer", null);
+
+
+
+        final ArrayList alarmList = new ArrayList();
+
+        if(cursor.moveToFirst()){
+            do{
+                alarmList.add(new ListAlarm(cursor.getInt(0),cursor.getString(1),cursor.getInt(2)==0));
+            }while (cursor.moveToNext());
+            cursor.close();
+        }
+        /*
+        alarmList.add(new ListAlarm("10:00",true));
+        */
         CustomAdapter adapter = new CustomAdapter(this,R.layout.alarm_list,alarmList);
         ListView listView =(ListView)findViewById(R.id.printList);
         listView.setAdapter(adapter);
@@ -116,9 +123,11 @@ public class Alarm extends AppCompatActivity {
 
                 ListAlarm listAlarm = (ListAlarm)alarmList.get(pos);
 
-                String a = String.valueOf(pos);
-                Toast toast = Toast.makeText(getApplicationContext(),listAlarm.time,Toast.LENGTH_LONG);
-                toast.show();
+                //Toast toast = Toast.makeText(getApplicationContext(),listAlarm.time,Toast.LENGTH_LONG);
+                //toast.show();
+                Intent intent = new Intent(getApplicationContext(), JoinAlarm.class);
+                intent.putExtra("i",listAlarm.i);
+                startActivity(intent);
             }
         });
 
@@ -162,12 +171,14 @@ public class Alarm extends AppCompatActivity {
     }
 
     class ListAlarm {
-        ListAlarm(String time,boolean on){
+        ListAlarm(int i,String time,boolean on){
+            this.i = i;
             this.time=time;
             this.on = on;
         }
         String time;
         boolean on;
+        int i;
     }
 
     

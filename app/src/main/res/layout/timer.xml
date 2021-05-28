@@ -173,4 +173,12 @@
         android:text="취소"
         android:visibility="invisible"
         />
+
+    <Button
+        android:id="@+id/timerEnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="종료"
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
+    <uses-permission android:name = "android.permission.VIBRATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,8 +14,11 @@
         <activity android:name=".JoinAlarm"></activity>
         <activity android:name=".Motion" />
         <activity android:name=".Alarm" />
-        <activity android:name=".StopWatch" />
-        <activity android:name=".Timer">
+
+        <activity android:name=".StopWatch" android:configChanges="screenSize|orientation"/>
+
+
+        <activity android:name=".Timer" android:configChanges="screenSize|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
