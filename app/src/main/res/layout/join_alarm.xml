@@ -39,7 +39,7 @@
 
 
     <TimePicker
-        android:id="@+id/timePicker"
+        android:id="@+id/ker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timePicker"
+        app:layout_constraintTop_toBottomOf="@+id/ker"
         app:layout_constraintRight_toRightOf="parent"
         android:text="------------------------------------------------------------------------------------------------"
         />
@@ -83,21 +83,35 @@
         android:layout_margin="10dp"
         />
     <TextView
-        android:id="@+id/holiday"
+        android:id="@+id/useTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/vibration"
+        app:layout_constraintTop_toBottomOf="@+id/nameAlarmEdt"
+
+        android:text="사용"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        />
+
+
+    <TextView
+        android:id="@+id/vibration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@+id/nameAlarmEdt"
+        app:layout_constraintTop_toBottomOf="@+id/useTimer"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/vibration"
+        app:layout_constraintBottom_toTopOf="@+id/motion"
 
-        android:text="휴일"
+        android:text="진동"
         android:textSize="20dp"
         android:layout_margin="10dp"
         />
 
     <Switch
-        android:id="@+id/holidaySwitch"
+        android:id="@+id/useSwitch"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:thumb="@drawable/switch_thumb"
@@ -109,19 +123,6 @@
 
         android:layout_margin="10dp"/>
 
-    <TextView
-        android:id="@+id/vibration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@+id/holiday"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/motion"
-
-        android:text="진동"
-        android:textSize="20dp"
-        android:layout_margin="10dp"
-        />
 
     <Switch
         android:id="@+id/vibrationSwitch"
@@ -131,7 +132,7 @@
         android:track="@drawable/switch_track_selector"
 
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/holidaySwitch"
+        app:layout_constraintTop_toBottomOf="@+id/useSwitch"
         app:layout_constraintBottom_toTopOf="@+id/motionSwitch"
 
         android:layout_margin="10dp"/>
@@ -162,6 +163,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         android:layout_margin="10dp"/>
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/motionSwitch"
+        android:text="삭제"
+        android:background="@drawable/button"/>
 
 
 

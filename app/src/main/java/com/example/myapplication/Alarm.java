@@ -1,14 +1,14 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +16,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import android.widget.TextView;
+
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import java.util.Locale;
 
 
 public class Alarm extends AppCompatActivity {
@@ -31,9 +37,10 @@ public class Alarm extends AppCompatActivity {
     DBHelper dbHelper;
     SQLiteDatabase db;
 
-
     static final String DATABASE_NAME = "time.db";
     static final int DATABASE_VERSION = 2;
+
+   // Intent alarmIntent = new Intent(this, AlarmReceiverOut.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +103,10 @@ public class Alarm extends AppCompatActivity {
         /*---------------------------------------------------------------------------------*/
         dbHelper = new DBHelper(this,DATABASE_NAME,null,DATABASE_VERSION);
         db = dbHelper.getWritableDatabase();
-        dbHelper.onUpgrade(db,0,0);
+        //dbHelper.onUpgrade(db,0,0);
 
-        Cursor cursor = db.rawQuery("SELECT id,name,use FROM timer", null);
+
+        Cursor cursor = db.rawQuery("SELECT id,name,use,time FROM timer", null);
 
 
 
@@ -106,10 +114,13 @@ public class Alarm extends AppCompatActivity {
 
         if(cursor.moveToFirst()){
             do{
-                alarmList.add(new ListAlarm(cursor.getInt(0),cursor.getString(1),cursor.getInt(2)==0));
+                alarmList.add(new ListAlarm(cursor.getInt(0),cursor.getString(1),cursor.getInt(2)==0,cursor.getLong(3)));
             }while (cursor.moveToNext());
-            cursor.close();
+            //cursor.close();
         }
+
+
+
         /*
         alarmList.add(new ListAlarm("10:00",true));
         */
@@ -128,8 +139,12 @@ public class Alarm extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), JoinAlarm.class);
                 intent.putExtra("i",listAlarm.i);
                 startActivity(intent);
+                finish();
+
+
             }
         });
+
 
     }
     class CustomAdapter extends ArrayAdapter<ListAlarm>{
@@ -157,30 +172,45 @@ public class Alarm extends AppCompatActivity {
                 LayoutInflater inflater =context.getLayoutInflater();
                 convertView = inflater.inflate(layout, null,true);
             }
-            ListAlarm list =  getItem(pos);
+            final ListAlarm list =  getItem(pos);
             TextView time = (TextView) convertView.findViewById(R.id.list_time);
-            Switch on =(Switch)convertView.findViewById(R.id.list_switch);
+            TextView use = (TextView) convertView.findViewById(R.id.list_use);
 
-            time.setText(list.time);
-            on.setChecked(list.on);
+            Calendar nextNotifyTime = new GregorianCalendar();
+            nextNotifyTime.setTimeInMillis(list.timeIS);
+            Date currentTime = nextNotifyTime.getTime();
+            SimpleDateFormat HourFormat = new SimpleDateFormat("kk", Locale.getDefault());
+            SimpleDateFormat MinuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
+            int pre_hour = Integer.parseInt(HourFormat.format(currentTime));
+            int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
 
+            time.setText(list.name+"  "+pre_hour+"시"+pre_minute+"분");
+            if(list.on){
+                System.out.println(list.on);
+                use.setText("사용중");
+            }else{
+                System.out.println(list.on);
+                use.setText("취소됨");
+            }
 
 
             return convertView;
         }
+
     }
 
     class ListAlarm {
-        ListAlarm(int i,String time,boolean on){
+        ListAlarm(int i,String name,boolean on,Long timeIS){
             this.i = i;
-            this.time=time;
+            this.name=name;
             this.on = on;
+            this.timeIS = timeIS;
         }
-        String time;
+        String name;
         boolean on;
         int i;
+        Long timeIS;
     }
 
-    
 
 }

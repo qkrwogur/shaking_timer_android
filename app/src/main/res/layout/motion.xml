@@ -28,28 +28,20 @@
         android:textSize="20dp"
         android:layout_margin="20dp"
         />
+
     <TextView
         android:id="@+id/line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@+id/motionText"
-        app:layout_constraintLeft_toLeftOf="parent"
-
+        android:layout_margin="20dp"
         android:text="------------------------------------------------------------------------------------------------"
-        android:layout_margin="20dp"
-        />
 
-    <ImageView
-        android:id="@+id/turn"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/turn"
-
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line"
-        android:layout_margin="20dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/motionText" />
+
+
 
 
 
@@ -60,19 +52,22 @@
         android:src="@drawable/shake"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turn"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintBottom_toTopOf="@+id/slope"
+
         android:layout_margin="20dp"
 
         />
-    
+
     <ImageView
+        android:id="@+id/slope"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/slope"
-        app:layout_constraintTop_toBottomOf="@+id/shake"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="20dp"
-        />
+        android:src="@drawable/slope"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shake" />
     <RadioGroup
         android:id="@+id/motionRadio"
         android:layout_width="wrap_content"
@@ -81,12 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/line"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/shake">
-        <RadioButton
-            android:id="@+id/slopeRadio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            />
+
         <RadioButton
             android:id="@+id/shakeRadio"
             android:layout_width="wrap_content"
@@ -98,7 +88,7 @@
             android:id="@+id/turnRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="220dp"
             />
 
 

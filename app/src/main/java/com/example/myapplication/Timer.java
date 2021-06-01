@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -23,6 +25,15 @@ import java.util.Locale;
 
 
 public class Timer extends AppCompatActivity  implements SensorEventListener {
+
+    DBHelper dbHelper;
+    SQLiteDatabase db;
+
+    static final String DATABASE_NAME = "time.db";
+    static final int DATABASE_VERSION = 2;
+
+    boolean whatIsMotion;
+    boolean motion;
 
     //타이머 변수들
     private Button startButton,stopButton,restButton,endButton;//시작 중지 취소 종료 버튼
@@ -63,6 +74,8 @@ public class Timer extends AppCompatActivity  implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer);
 
+        dbHelper = new DBHelper(this,DATABASE_NAME,null,DATABASE_VERSION);
+        db = dbHelper.getWritableDatabase();
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//흔들기
         accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//흔들기
@@ -180,6 +193,12 @@ public class Timer extends AppCompatActivity  implements SensorEventListener {
             }
         });
 
+        Cursor cursor = db.rawQuery("SELECT whatIsMotion FROM timer WHERE id='"+ 1 + "'", null);
+
+        while(cursor.moveToNext()){
+            whatIsMotion=(cursor.getInt(0)==0);
+        }
+
 
     }
     private void CheckState(){
@@ -187,10 +206,12 @@ public class Timer extends AppCompatActivity  implements SensorEventListener {
             if (accelerormeterSensor != null)
                 sensorManager.registerListener(this, accelerormeterSensor,
                         SensorManager.SENSOR_DELAY_GAME);
+            motion=true;
         }
         else{
             if (sensorManager != null)
                 sensorManager.unregisterListener(this);
+            motion=false;
         }
     }
     public void startTimer(){
@@ -303,13 +324,16 @@ public class Timer extends AppCompatActivity  implements SensorEventListener {
     @Override//여기가 화면 회전
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(end){
-            pauseTimer();
-        }else{
-            endButton.setVisibility(View.INVISIBLE);
-            vibrator.cancel();
-            updateButtons();
+        if(!whatIsMotion && motion){
+            if(end){
+                pauseTimer();
+            }else{
+                endButton.setVisibility(View.INVISIBLE);
+                vibrator.cancel();
+                updateButtons();
+            }
         }
+
     }
 
     @Override
@@ -331,22 +355,25 @@ public class Timer extends AppCompatActivity  implements SensorEventListener {
 
                 speed = Math.abs(x + y + z - lastX - lastY - lastZ) / gabOfTime * 10000;
 
+                if(whatIsMotion){
+                    if (speed > SHAKE_THRESHOLD+1000) {
+                        // doSomething
+                        moveCount++;
+                        System.out.println(speed);
+                        if(end && moveCount>3){
+                            moveCount=0;
+                            pauseTimer();
+                        }else if(moveCount>3){
+                            moveCount=0;
+                            endButton.setVisibility(View.INVISIBLE);
+                            vibrator.cancel();
+                            updateButtons();
+                        }
 
-                if (speed > SHAKE_THRESHOLD+1000) {
-                    // doSomething
-                    moveCount++;
-                    System.out.println(speed);
-                    if(end && moveCount>3){
-                        moveCount=0;
-                        pauseTimer();
-                    }else if(moveCount>3){
-                        moveCount=0;
-                        endButton.setVisibility(View.INVISIBLE);
-                        vibrator.cancel();
-                        updateButtons();
                     }
-
                 }
+
+
 
                 lastX = event.values[DATA_X];
                 lastY = event.values[DATA_Y];

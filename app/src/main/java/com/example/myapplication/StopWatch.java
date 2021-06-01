@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -22,6 +24,15 @@ import android.widget.TextView;
 
 
 public class StopWatch extends AppCompatActivity implements SensorEventListener {
+
+    DBHelper dbHelper;
+    SQLiteDatabase db;
+
+    static final String DATABASE_NAME = "time.db";
+    static final int DATABASE_VERSION = 2;
+
+    boolean whatIsMotion;
+    boolean motion;
 
     private Button StopWatchStart,record,pause,stop;//타이머 버튼
     private TextView StopWatchText,RecordView;
@@ -52,6 +63,9 @@ public class StopWatch extends AppCompatActivity implements SensorEventListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stop_watch);
+
+        dbHelper = new DBHelper(this,DATABASE_NAME,null,DATABASE_VERSION);
+        db = dbHelper.getWritableDatabase();
 
         Button stopWatch = (Button)findViewById(R.id.stopWatch);
         Button alarm = (Button)findViewById(R.id.alarm);
@@ -162,6 +176,12 @@ public class StopWatch extends AppCompatActivity implements SensorEventListener 
             }
         });
 
+        Cursor cursor = db.rawQuery("SELECT whatIsMotion FROM timer WHERE id='"+ 1 + "'", null);
+
+        while(cursor.moveToNext()){
+            whatIsMotion=(cursor.getInt(0)==0);
+        }
+
     }
 
     private void CheckState(){
@@ -169,10 +189,12 @@ public class StopWatch extends AppCompatActivity implements SensorEventListener 
             if (accelerormeterSensor != null)
                 sensorManager.registerListener(this, accelerormeterSensor,
                         SensorManager.SENSOR_DELAY_GAME);
+            motion=true;
         }
         else{
             if (sensorManager != null)
                 sensorManager.unregisterListener(this);
+            motion=false;
         }
     }
 
@@ -225,9 +247,12 @@ public class StopWatch extends AppCompatActivity implements SensorEventListener 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(isRunning){
-            RecordView.setText(RecordView.getText() + StopWatchText.getText().toString() + "\n");
+        if(!whatIsMotion && motion){
+            if(isRunning){
+                RecordView.setText(RecordView.getText() + StopWatchText.getText().toString() + "\n");
+            }
         }
+
 
 
     }
@@ -252,16 +277,19 @@ public class StopWatch extends AppCompatActivity implements SensorEventListener 
                 speed = Math.abs(x + y + z - lastX - lastY - lastZ) / gabOfTime * 10000;
 
 
-                if (speed > SHAKE_THRESHOLD+1000) {
-                    // doSomething
-                    moveCount++;
-                    System.out.println(speed);
-                    if(isRunning && moveCount>3){
-                        moveCount=0;
-                        RecordView.setText(RecordView.getText() + StopWatchText.getText().toString() + "\n");
-                    }
+                if(whatIsMotion){
+                    if (speed > SHAKE_THRESHOLD+1000) {
+                        // doSomething
+                        moveCount++;
+                        System.out.println(speed);
+                        if(isRunning && moveCount>3){
+                            moveCount=0;
+                            RecordView.setText(RecordView.getText() + StopWatchText.getText().toString() + "\n");
+                        }
 
+                    }
                 }
+
 
                 lastX = event.values[DATA_X];
                 lastY = event.values[DATA_Y];

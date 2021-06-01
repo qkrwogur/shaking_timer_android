@@ -16,17 +16,19 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE timer (id INTEGER PRIMARY KEY" +
-                " AUTOINCREMENT,use INTEGER,name TEXT, Vibration INTEGER,holiday INTEGER," +
-                "motion INTEGER, whatIsMotion INTEGER);");
+                " AUTOINCREMENT,use INTEGER,name TEXT, Vibration INTEGER," +
+                "motion INTEGER, whatIsMotion INTEGER,time Long);");
         for (int i = 0; i < 5; i++){
-            int use = 1;
+            int use = 0;
             String name = "test" + i;
             int Vibration  = 0;
-            int holiday  = 0;
             int motion  = 0;
             int whatIsMotion  = 0;
-            db.execSQL("INSERT INTO timer VALUES(null,'"+use+"','"+ name + "','" + Vibration + "','" + holiday +"','" + motion + "','" + whatIsMotion + "')");
+            long time = 0;
+            db.execSQL("INSERT INTO timer VALUES(null,'"+use+"','"+ name + "','" + Vibration + "','" + motion + "','" + whatIsMotion +
+                    "','" +time+"')");
         }
+
     }
 
     @Override
