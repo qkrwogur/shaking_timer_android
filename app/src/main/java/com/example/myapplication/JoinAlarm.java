@@ -245,6 +245,12 @@ public class JoinAlarm extends AppCompatActivity {
                 }else{
                     db.execSQL("INSERT INTO timer VALUES(null,'"+Ius+"','"+ timeName + "','" + Ivi + "','" + Imo + "','" + IWhatISMotion +
                             "','" +(long)calendar.getTimeInMillis()+"')");
+                    Cursor cursor = db.rawQuery("SELECT id FROM timer WHERE time='"+ (long)calendar.getTimeInMillis() + "'", null);
+
+                    while(cursor.moveToNext()){
+                      i=cursor.getInt(0);
+                    }
+
                 }
 
                 if(Ius==0){
@@ -273,7 +279,43 @@ public class JoinAlarm extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(i!=0){
+                    int hour, hour_24, minute;
+                    String am_pm;
+
+                    if (Build.VERSION.SDK_INT >= 23 ){
+                        hour_24 = ker.getHour();
+                        minute = ker.getMinute();
+                    }
+                    else{
+                        hour_24 = ker.getCurrentHour();
+                        minute = ker.getCurrentMinute();
+                    }
+                    if(hour_24 > 12) {
+                        am_pm = "PM";
+                        hour = hour_24 - 12;
+                    }
+                    else
+                    {
+                        hour = hour_24;
+                        am_pm="AM";
+                    }
+
+                    // 현재 지정된 시간으로 알람 시간 설정
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+                    calendar.set(Calendar.HOUR_OF_DAY, hour_24);
+                    calendar.set(Calendar.MINUTE, minute);
+                    calendar.set(Calendar.SECOND, 0);
+                    if (calendar.before(Calendar.getInstance())) {
+                        calendar.add(Calendar.DATE, 1);
+                    }
+
                     db.execSQL("DELETE FROM timer WHERE id = '" + i + "';");
+                    diaryNotification(calendar,true);
+                    Date currentDateTime = calendar.getTime();
+                    String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
+                    Toast.makeText(getApplicationContext(),date_text + "으로 알람이 삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(getApplicationContext(), Alarm.class);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
@@ -292,7 +334,6 @@ public class JoinAlarm extends AppCompatActivity {
         PackageManager pm = this.getPackageManager();
         ComponentName receiver = new ComponentName(this, DeviceBootReceiver.class);
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, alarmIntent, i);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -302,18 +343,15 @@ public class JoinAlarm extends AppCompatActivity {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, pendingIntent);
 
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
         }
-
         if(why) {// 알람 취소
             System.out.println("취소");
             alarmManager.cancel(pendingIntent);
 
         }
-
 
             // 부팅 후 실행되는 리시버 사용가능하게 설정
             pm.setComponentEnabledSetting(receiver,

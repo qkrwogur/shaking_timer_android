@@ -54,7 +54,6 @@ public class Alarm extends AppCompatActivity {
 
 
 
-
         stopWatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +113,14 @@ public class Alarm extends AppCompatActivity {
 
         if(cursor.moveToFirst()){
             do{
-                alarmList.add(new ListAlarm(cursor.getInt(0),cursor.getString(1),cursor.getInt(2)==0,cursor.getLong(3)));
+
+                int tmepI = 0;
+                tmepI =cursor.getInt(0);
+                if(tmepI!=1)
+                {
+                    alarmList.add(new ListAlarm(cursor.getInt(0),cursor.getString(1),cursor.getInt(2)==0,cursor.getLong(3)));
+                }
+
             }while (cursor.moveToNext());
             //cursor.close();
         }

@@ -48,8 +48,8 @@ public class AlarmReceiver extends BroadcastReceiver {
             builder.setSmallIcon(R.drawable.time); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
 
 
-            String channelName ="매일 알람 채널";
-            String description = "매일 정해진 시간에 알람합니다.";
+            String channelName ="알람";
+            String description = "움직이는 타이머앱의 알람입니다.";
             int importance = NotificationManager.IMPORTANCE_HIGH; //소리와 알림메시지를 같이 보여줌
 
             NotificationChannel channel = new NotificationChannel("default", channelName, importance);
@@ -65,14 +65,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-
                 .setTicker("{Time to watch some cool stuff!}")
                 .setContentTitle("알람")
                 .setContentText("움직이는 타이머앱의 알람입니다.")
                 .setContentInfo("INFO")
                 .setContentIntent(pendingI);
-
-
 
         if (notificationManager != null) {
 
@@ -81,14 +78,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             Calendar nextNotifyTime = Calendar.getInstance();
 
-
-
-
             // 내일 같은 시간으로 알람시간 결정
             nextNotifyTime.add(Calendar.DATE, 1);
-
             //  Preference에 설정한 값 저장
-
             Date currentDateTime = nextNotifyTime.getTime();
             String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
             Toast.makeText(context.getApplicationContext(),"다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();

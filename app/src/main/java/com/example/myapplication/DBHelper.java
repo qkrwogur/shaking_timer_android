@@ -18,16 +18,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE timer (id INTEGER PRIMARY KEY" +
                 " AUTOINCREMENT,use INTEGER,name TEXT, Vibration INTEGER," +
                 "motion INTEGER, whatIsMotion INTEGER,time Long);");
-        for (int i = 0; i < 5; i++){
+
             int use = 0;
-            String name = "test" + i;
+            String name = "test";
             int Vibration  = 0;
             int motion  = 0;
             int whatIsMotion  = 0;
             long time = 0;
             db.execSQL("INSERT INTO timer VALUES(null,'"+use+"','"+ name + "','" + Vibration + "','" + motion + "','" + whatIsMotion +
                     "','" +time+"')");
-        }
+
 
     }
 

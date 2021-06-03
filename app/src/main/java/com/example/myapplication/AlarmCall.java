@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -75,106 +76,127 @@ public class AlarmCall extends AppCompatActivity implements SensorEventListener 
 
     private int moveCount;
 
+    TextView MotionCall;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm_call);
 
-        vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-        timeText = findViewById(R.id.alarmTimeCall);
-        cancel = findViewById(R.id.alarmCancel);
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//흔들기
-        accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//흔들기
-
-        dbHelper = new DBHelper(this,DATABASE_NAME,null,DATABASE_VERSION);
-        db = dbHelper.getWritableDatabase();
-
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                (int)(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*0.75),
-                AudioManager.FLAG_SHOW_UI);
-
-        mp = MediaPlayer.create(this, R.raw.old_pop);
-        mp.setVolume(1,1);
-        mp.start();
-        mp.setLooping(true);
         final Intent intent = getIntent();
         time = intent.getStringExtra("time");
 
-        nowTime = time.substring(11,13);
-        nowMinute = time.substring(14,16);
-        IntNowTime = Integer.parseInt(nowTime);
-        IntNowMinute = Integer.parseInt(nowMinute);
+        if(time==null)
+        {
+            System.out.println("시간시간"+time);
+            finish();
+        }else{
+            nowTime = time.substring(11,13);
+            nowMinute = time.substring(14,16);
+            IntNowTime = Integer.parseInt(nowTime);
+            IntNowMinute = Integer.parseInt(nowMinute);
+
+            mp = MediaPlayer.create(this, R.raw.old_pop);
+            mp.setVolume(1,1);
+            mp.start();
+            mp.setLooping(true);
+
+
+            vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+            timeText = findViewById(R.id.alarmTimeCall);
+            cancel = findViewById(R.id.alarmCancel);
+
+            sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//흔들기
+            accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//흔들기
+
+            dbHelper = new DBHelper(this,DATABASE_NAME,null,DATABASE_VERSION);
+            db = dbHelper.getWritableDatabase();
+
+            mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                    (int)(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)*0.75),
+                    AudioManager.FLAG_SHOW_UI);
 
 
 
-        Cursor cursor = db.rawQuery("SELECT time,Vibration,motion,whatIsMotion,name FROM timer", null);
+
+
+            MotionCall =  findViewById(R.id.motionAlarmCall);
+            Cursor cursor = db.rawQuery("SELECT time,Vibration,motion,whatIsMotion,name FROM timer", null);
 
 
 
-        final ArrayList alarmList = new ArrayList();
+            final ArrayList alarmList = new ArrayList();
 
-        if(cursor.moveToFirst()){
-            do{
-                howTime=cursor.getLong(0);
-                Vibration=(cursor.getInt(1)==0);
-                motion = (cursor.getInt(2)==0);
-                whatIsMotion = (cursor.getInt(3)==0);
-                name = cursor.getString(4);
+            if(cursor.moveToFirst()){
+                do{
+                    howTime=cursor.getLong(0);
+                    Vibration=(cursor.getInt(1)==0);
+                    motion = (cursor.getInt(2)==0);
+                    whatIsMotion = (cursor.getInt(3)==0);
+                    name = cursor.getString(4);
 
-                Calendar nextNotifyTime = new GregorianCalendar();
-                nextNotifyTime.setTimeInMillis(howTime);
-                Date currentTime = nextNotifyTime.getTime();
-                SimpleDateFormat HourFormat = new SimpleDateFormat("kk", Locale.getDefault());
-                SimpleDateFormat MinuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
-                int pre_hour = Integer.parseInt(HourFormat.format(currentTime));
-                int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
+                    Calendar nextNotifyTime = new GregorianCalendar();
+                    nextNotifyTime.setTimeInMillis(howTime);
+                    Date currentTime = nextNotifyTime.getTime();
+                    SimpleDateFormat HourFormat = new SimpleDateFormat("kk", Locale.getDefault());
+                    SimpleDateFormat MinuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
+                    int pre_hour = Integer.parseInt(HourFormat.format(currentTime));
+                    int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
 
-                if(pre_hour==IntNowTime && pre_minute==IntNowMinute){
-                    realV=Vibration;
-                    realM=motion;
-                    realN=name;
-                    realW=whatIsMotion;
-                }
-
-            }while (cursor.moveToNext());
-
-        }
-
-        timeText.setText(realN+" "+nowTime+":"+nowMinute+" 알람");
-
-
-
-        if(realV){
-            vibrator.vibrate(new long[]{500,1000,500,1000},0);
-        }
-
-        if(realM){
-            if(realW){
-                if (accelerormeterSensor != null){
-                    sensorManager.registerListener(this, accelerormeterSensor, SensorManager.SENSOR_DELAY_GAME);
-                }else{
-                    if(sensorManager != null){
-                        sensorManager.unregisterListener(this);
+                    if(pre_hour==IntNowTime && pre_minute==IntNowMinute){
+                        realV=Vibration;
+                        realM=motion;
+                        realN=name;
+                        realW=whatIsMotion;
                     }
-                }
-            }else{
-                slop=true;
+
+                }while (cursor.moveToNext());
+
             }
+
+            timeText.setText(realN+" "+nowTime+":"+nowMinute+" 알람");
+
+
+
+            if(realV){
+                vibrator.vibrate(new long[]{500,1000,500,1000},0);
+            }
+
+            if(realM){
+                if(realW){
+                    if (accelerormeterSensor != null){
+                        sensorManager.registerListener(this, accelerormeterSensor, SensorManager.SENSOR_DELAY_GAME);
+                        MotionCall.setText("종료 방법은 흔들기 입니다.");
+                    }else{
+                        if(sensorManager != null){
+                            sensorManager.unregisterListener(this);
+                        }
+                    }
+                }else{
+                    slop=true;
+                    MotionCall.setText("종료 방법은 화면 회전 입니다.");
+                }
+            }
+
+
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mp.stop();
+                    vibrator.cancel();
+                    finish();
+
+                }
+            });
+
+
         }
 
 
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mp.stop();
-                vibrator.cancel();
-                finish();
-            }
-        });
 
     }
 

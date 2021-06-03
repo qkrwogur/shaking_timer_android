@@ -217,7 +217,6 @@ public class StopWatch extends AppCompatActivity implements SensorEventListener 
         @Override
         public void run() {
            int i = 0;
-
             while (true) {
                 while (isRunning) { //일시정지를 누르면 멈춤
                     Message msg = new Message();

@@ -28,41 +28,52 @@ public class DeviceBootReceiver extends BroadcastReceiver {
     static final String DATABASE_NAME = "time.db";
     static final int DATABASE_VERSION = 2;
 
+    long millis;
+    int id;
+    boolean use;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         dbHelper = new DBHelper(context,DATABASE_NAME,null,DATABASE_VERSION);
         db = dbHelper.getWritableDatabase();
 
         if (Objects.equals(intent.getAction(), "android.intent.action.BOOT_COMPLETED")) {
-
-            // on device boot complete, reset the alarm
+            //알람을 다시 저장
             Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
 
-            AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//
-
-            Cursor cursor = db.rawQuery("SELECT time FROM timer", null);
-
-
+            Cursor cursor = db.rawQuery("SELECT time,id,use FROM timer", null);
 
             if(cursor.moveToFirst()){
                 do{
 
-                    long millis = cursor.getLong(0);
+                    millis = cursor.getLong(0);
+                    id = cursor.getInt(1);
+                    use = (cursor.getInt(2)==0);
+                    if(use){
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, alarmIntent, 0);
 
-                    Calendar current_calendar = Calendar.getInstance();
-                    Calendar nextNotifyTime = new GregorianCalendar();
-                    nextNotifyTime.setTimeInMillis(millis);
+                        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-                    if (current_calendar.after(nextNotifyTime)) {
-                        nextNotifyTime.add(Calendar.DATE, 1);
+
+                        Calendar current_calendar = Calendar.getInstance();
+                        Calendar nextNotifyTime = new GregorianCalendar();
+                        nextNotifyTime.setTimeInMillis(millis);
+
+                        if (current_calendar.after(nextNotifyTime)) {
+                            nextNotifyTime.add(Calendar.DATE, 1);
+                        }
+
+                        if (manager != null) {
+                            manager.setRepeating(AlarmManager.RTC_WAKEUP, nextNotifyTime.getTimeInMillis(),
+                                    AlarmManager.INTERVAL_DAY, pendingIntent);
+                        }
+
+                        Date currentDateTime = nextNotifyTime.getTime();
+                        String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
+                        Toast.makeText(context.getApplicationContext(),date_text + "으로 알람이 설정됨", Toast.LENGTH_SHORT).show();
                     }
 
-                    if (manager != null) {
-                        manager.setRepeating(AlarmManager.RTC_WAKEUP, nextNotifyTime.getTimeInMillis(),
-                                AlarmManager.INTERVAL_DAY, pendingIntent);
-                    }
+
                 }while (cursor.moveToNext());
 
             }

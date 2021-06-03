@@ -5,16 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AlarmCall">
+
+    <ImageView
+        android:id="@+id/alarmCancelImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:src="@drawable/alarm_call"
+        app:layout_constraintBottom_toTopOf="@+id/alarmCancel"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <TextView
         android:id="@+id/alarmTimeCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/alarmCancel"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="약속 14:15 알람"
         android:textSize="30dp"
-        android:text=""/>
+        app:layout_constraintBottom_toTopOf="@+id/alarmCancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.447" />
+
+    <TextView
+        android:id="@+id/motionAlarmCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/alarmTimeCall"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="설정된 모션이 없습니다."
+        android:textSize="25dp"
+        />
 
     <Button
         android:id="@+id/alarmCancel"
