@@ -49,7 +49,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
                     millis = cursor.getLong(0);
                     id = cursor.getInt(1);
                     use = (cursor.getInt(2)==0);
-                    if(use){
+                    if(use && id!=1){
                         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, alarmIntent, 0);
 
                         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
