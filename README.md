@@ -5,6 +5,12 @@
 타이머 알람  스탑와치 기능이 들어 있습니다.
 
 각 기능은 모션을 사용하여서 제어 할 수 있습니다.\
+
+타이머\
 <img src="https://user-images.githubusercontent.com/59274370/139624494-694b2a00-ce02-4c9c-9aaa-79d26102a907.jpg"  width="50%" height="30%">
+\
+<img src="https://user-images.githubusercontent.com/59274370/139624500-84647a94-b8c2-4892-a801-f439f183ee7a.jpg"  width="50%" height="30%">
+
+
 
 
