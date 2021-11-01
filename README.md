@@ -24,8 +24,10 @@
 
 <img src="https://user-images.githubusercontent.com/59274370/139624505-1eb626a4-8373-422a-aac8-830655c025c8.jpg"  width="40%" height="30%">
 
-<img src="https://user-images.githubusercontent.com/59274370/139624507-94949552-7166-4e3e-b80c-6f1e9ba2e5df.jpg"  width="50%" height="30%">
+스탑와치 또한 모션을 사용 하여 사용 할 수 있습니다.
+<img src="https://user-images.githubusercontent.com/59274370/139624507-94949552-7166-4e3e-b80c-6f1e9ba2e5df.jpg"  width="40%" height="30%">
 
+<img src="https://user-images.githubusercontent.com/59274370/139624508-fe75a503-f33e-459a-9e14-eae2c2c37db5.jpg"  width="40%" height="30%">
 
 
 
