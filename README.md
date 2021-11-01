@@ -15,6 +15,8 @@
 타이머 실행 화면\
 <img src="https://user-images.githubusercontent.com/59274370/139624494-694b2a00-ce02-4c9c-9aaa-79d26102a907.jpg"  width="50%" height="30%">
 
+<img src="https://user-images.githubusercontent.com/59274370/139624506-5a180a68-cdea-4844-813a-925da45501b2.jpg"  width="50%" height="30%">
+
 <img src="https://user-images.githubusercontent.com/59274370/139624505-1eb626a4-8373-422a-aac8-830655c025c8.jpg"  width="50%" height="30%">
 
 
